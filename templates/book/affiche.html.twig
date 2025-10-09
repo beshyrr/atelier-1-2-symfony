@@ -1,0 +1,38 @@
+<h1 style="text-align: center; margin-bottom: 20px;">Liste des Books</h1>
+
+<table border="1" style="width: 100%; border-collapse: collapse; text-align: center;">
+    <tr style="background-color: #f2f2f2;">
+        <th>Title</th>
+        <th>Category</th>
+        <th>Publication Date</th>
+        <th>Published</th>
+        <th>Author</th>
+         <th>Actions</th>
+
+    </tr>
+
+    {% for b in publishedBooks %}
+        <tr>
+            <td>{{ b.title }}</td>
+            <td>{{ b.category }}</td>
+            <td>{{ b.publicationDate ? b.publicationDate|date('Y-m-d') : '' }}</td>
+            <td>{{ b.published ? 'Yes' : 'No' }}</td>
+          <td>{{ b.author ? b.author.username : 'Aucun' }}</td>
+          <td> <td>
+    <a href="{{ path('app_showBook', {'ref': b.ref}) }}">Detail</a> |
+    <a href="{{ path('app_editBook', {'ref': b.ref}) }}">Edit</a> |
+    <a href="{{ path('app_deleteBook', {'ref': b.ref}) }}" 
+       onclick="return confirm('Voulez-vous vraiment supprimer ce livre ?');">Delete</a>
+</td>
+
+         </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="5">Aucun book trouvé</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<p>Number of published books: {{ numPublishedBooks }}</p>
+<p>Number of unpublished books: {{ numUnpublishedBooks }}</p>

@@ -1,0 +1,21 @@
+<table border="1">
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>edit</th>
+        <th>delete</th>
+    </tr>
+    {% for a in author %}
+        <tr>
+            <td>{{ a.username }}</td>
+            <td>{{ a.email }}</td>
+            <td> <a href="{{ path('app_edit',{'id': a.id})  }}">edit</a> </td>
+            <td> <a href="{{ path('app_delete',{'id': a.id})  }}">delete</a> </td>
+
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="2">Aucun auteur trouvé</td>
+        </tr>
+    {% endfor %}
+</table>

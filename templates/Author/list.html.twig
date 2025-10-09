@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Authors</title>
+</head>
+<body>
+
+<h1>Le nombre des auteurs est : {{ authors|length }}</h1>
+
+{% if authors|length > 0 %}
+<table border="1">
+    <tr> 
+        <th>id</th>
+        <th>picture</th>
+        <th>username</th>
+        <th>email</th>
+        <th>nb_books</th>
+    </tr> 
+
+    {% set nbTotal = 0 %}
+    {% for a in authors %}
+        {% set nbTotal = nbTotal + a.nb_books %}
+        <tr>
+            <td>{{ a.id }}</td>
+            <td>
+                {% if a.username == 'Victor Hugo' %}
+                    <img src="{{ asset('images/Victor_Hugo.jpg') }}" alt="Victor Hugo" width="100">
+                {% elseif a.username == 'William Shakespeare' %}
+                    <img src="{{ asset('images/William_Shakespeare.jpg') }}" alt="William Shakespeare" width="100">
+                {% elseif a.username == 'Taha Hussein' %}
+                    <img src="{{ asset('images/Taha_Hussein.jpg') }}" alt="Taha Hussein" width="100">
+                {% else %}
+                    <img src="{{ asset('images/default.jpg') }}" alt="default picture" width="100">
+                {% endif %}
+            </td>
+            <td>{{ a.username }}</td>
+            <td>{{ a.email }}</td>
+            <td>{{ a.nb_books }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<p>Le nombre total des livres de tous les auteurs est : {{ nbTotal }}</p>
+
+{% else %}
+<h2>Tableau vide</h2>
+{% endif %}
+
+</body>
+</html>

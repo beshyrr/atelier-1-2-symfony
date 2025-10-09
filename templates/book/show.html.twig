@@ -1,0 +1,12 @@
+<h1>Détails du Livre</h1>
+
+<ul>
+    <li><strong>Title:</strong> {{ book.title }}</li>
+    <li><strong>Category:</strong> {{ book.category }}</li>
+    <li><strong>Publication Date:</strong> {{ book.publicationDate ? book.publicationDate|date('Y-m-d') : '' }}</li>
+    <li><strong>Published:</strong> {{ book.published ? 'Yes' : 'No' }}</li>
+    <li><strong>Author:</strong> {{ book.author ? book.author.username : 'Aucun' }}</li>
+    <li><strong>Ref:</strong> {{ book.ref }}</li>
+</ul>
+
+<a href="{{ path('app_AfficheBook') }}">Retour à la liste</a>
