@@ -1,1 +1,10 @@
-<h1>Author: {{ n }}</h1>
+{% extends 'base.html.twig' %}
+
+{% block title %}Author Details{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Author: {{ n }}</h1>
+    <p>This is the author details page.</p>
+</div>
+{% endblock %}
