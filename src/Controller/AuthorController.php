@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Author;
+use App\Repository\AuthorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,5 +33,31 @@ class AuthorController extends AbstractController
             'nb_books' => 10,
         ];
         return $this->render("author/showAuthor.html.twig", ['author' => $author]);
+    }
+
+    #[Route('/affiche', name: 'app_Affiche')]
+    public function affiche(AuthorRepository $repository): Response
+    {
+        $authors = $repository->findAll();
+
+        return $this->render('author/Affiche.html.twig', [
+            'author' => $authors
+        ]);
+    }
+
+    #[Route('/addstatique', name: 'app_addstatiques')]
+    public function addstatique(EntityManagerInterface $em)
+    {
+        // Création de l'auteur
+        $author = new Author();
+        $author->setUsername("newtest");
+        $author->setEmail("newtest@gmail.com");
+
+        // Persistance et flush
+        $em->persist($author);
+        $em->flush();
+
+        // Redirection
+        return $this->redirectToRoute('app_Affiche');
     }
 }

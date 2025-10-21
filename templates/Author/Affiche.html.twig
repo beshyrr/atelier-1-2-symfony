@@ -1,21 +1,32 @@
-<table border="1">
-    <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>edit</th>
-        <th>delete</th>
-    </tr>
-    {% for a in author %}
-        <tr>
-            <td>{{ a.username }}</td>
-            <td>{{ a.email }}</td>
-            <td> <a href="{{ path('app_edit',{'id': a.id})  }}">edit</a> </td>
-            <td> <a href="{{ path('app_delete',{'id': a.id})  }}">delete</a> </td>
+{% extends 'base.html.twig' %}
 
-        </tr>
-    {% else %}
-        <tr>
-            <td colspan="2">Aucun auteur trouvé</td>
-        </tr>
-    {% endfor %}
-</table>
+{% block title %}Authors List{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center mb-4">Authors List</h1>
+            <div class="row">
+                {% for author in author %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ author.username }}</h5>
+                            <p class="card-text">
+                                <strong>Email:</strong> {{ author.email }}<br>
+                                <strong>Books:</strong> {{ author.nbBooks }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="text-center mt-4">
+                <a href="{{ path('app_addstatiques') }}" class="btn btn-success">Add Static Author</a>
+                <a href="{{ path('app_author') }}" class="btn btn-secondary">Back to Authors</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
