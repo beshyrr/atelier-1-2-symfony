@@ -1,2 +1,40 @@
-<h1> add Book </h1>
-{{ form(f) }}
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Book{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Add New Book</h3>
+                </div>
+                <div class="card-body">
+                    {{ form_start(f) }}
+                    <div class="form-group">
+                        {{ form_row(f.title, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(f.category, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(f.publicationDate, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(f.published, {'attr': {'class': 'form-check-input'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(f.author, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(f.Ajouter, {'attr': {'class': 'btn btn-success'}}) }}
+                    </div>
+                    {{ form_end(f) }}
+                    <a href="{{ path('app_AfficheBook') }}" class="btn btn-secondary">Back to Books</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

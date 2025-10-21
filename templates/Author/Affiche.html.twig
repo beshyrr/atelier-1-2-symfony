@@ -17,12 +17,18 @@
                                 <strong>Email:</strong> {{ author.email }}<br>
                                 <strong>Books:</strong> {{ author.nbBooks }}
                             </p>
+                            <div class="btn-group" role="group">
+                                <a href="{{ path('app_edit', {'id': author.id}) }}" class="btn btn-sm btn-warning">Edit</a>
+                                <a href="{{ path('app_delete', {'id': author.id}) }}" class="btn btn-sm btn-danger" 
+                                   onclick="return confirm('Are you sure you want to delete this author?');">Delete</a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
             <div class="text-center mt-4">
+                <a href="{{ path('app_Add') }}" class="btn btn-primary">Add New Author</a>
                 <a href="{{ path('app_addstatiques') }}" class="btn btn-success">Add Static Author</a>
                 <a href="{{ path('app_author') }}" class="btn btn-secondary">Back to Authors</a>
             </div>

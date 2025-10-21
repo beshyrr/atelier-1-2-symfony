@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Author;
+use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -59,5 +62,63 @@ class AuthorController extends AbstractController
 
         // Redirection
         return $this->redirectToRoute('app_Affiche');
+    }
+
+    #[Route('/Add', name: 'app_Add')]
+    public function Add(Request $request, EntityManagerInterface $em)
+    {
+        $author = new Author();
+        $form = $this->createForm(AuthorType::class, $author);
+        $form->add('Ajouter', SubmitType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($author);
+            $em->flush();
+
+            return $this->redirectToRoute('app_Affiche');
+        }
+
+        return $this->render('author/Add.html.twig', [
+            'f' => $form->createView()
+        ]);
+    }
+
+    #[Route(path: '/edit/{id}', name: 'app_edit')]
+    public function edit(AuthorRepository $repository, EntityManagerInterface $em, $id, Request $request): Response
+    {
+        $author = $repository->find($id);
+
+        if (!$author) {
+            throw $this->createNotFoundException('Auteur non trouvé');
+        }
+
+        $form = $this->createForm(AuthorType::class, $author);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush(); // sauvegarde les modifications
+
+            return $this->redirectToRoute('app_Affiche');
+        }
+
+        return $this->render('author/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route(path: '/delete/{id}', name: 'app_delete')]
+    public function delete(AuthorRepository $repository, EntityManagerInterface $em, $id, Request $request): Response
+    {
+        $author = $repository->find($id);
+
+        if (!$author) {
+            throw $this->createNotFoundException('Auteur non trouvé');
+        }
+
+        $em->remove($author); // on passe l'objet à supprimer
+        $em->flush();
+
+        return $this->redirectToRoute('app_affiche');
     }
 }
